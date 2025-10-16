@@ -1,3 +1,13 @@
-.hero-gradient {
-  background-image: var(--gradient-hero);
+/* App-specific styles */
+.gradient-header {
+  background: linear-gradient(135deg, hsl(221 83% 53% / 0.05) 0%, hsl(221 83% 53% / 0.02) 100%);
+}
+
+.card-hover {
+  transition: all 0.2s ease-in-out;
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
