@@ -3,8 +3,10 @@ import { Card } from './ui/card';
 import { Button } from './ui/button';
 import { Label } from './ui/label';
 import { Upload, X, Image as ImageIcon } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 export const ImageUpload = ({ value, onChange, testId = 'image-upload' }) => {
+  const { t } = useLanguage();
   const [preview, setPreview] = useState(value || '');
 
   const handleFileChange = (e) => {
@@ -27,13 +29,13 @@ export const ImageUpload = ({ value, onChange, testId = 'image-upload' }) => {
 
   return (
     <div className="space-y-2">
-      <Label>Imagen del Personaje</Label>
+      <Label className="text-sm font-medium">{t.image}</Label>
       <Card
         data-testid={testId}
-        className="relative overflow-hidden transition-colors hover:bg-muted/50"
+        className="relative overflow-hidden border-2 border-dashed hover:border-primary/50 transition-colors"
       >
         {preview ? (
-          <div className="relative aspect-video w-full">
+          <div className="relative aspect-video w-full bg-muted">
             <img
               src={preview}
               alt="Preview"
@@ -42,7 +44,7 @@ export const ImageUpload = ({ value, onChange, testId = 'image-upload' }) => {
             <Button
               size="sm"
               variant="destructive"
-              className="absolute top-2 right-2"
+              className="absolute top-3 right-3 shadow-lg"
               onClick={handleRemove}
               data-testid={`${testId}-remove-button`}
             >
@@ -52,10 +54,12 @@ export const ImageUpload = ({ value, onChange, testId = 'image-upload' }) => {
         ) : (
           <label
             htmlFor="image-upload-input"
-            className="flex flex-col items-center justify-center border-2 border-dashed rounded-lg p-8 cursor-pointer"
+            className="flex flex-col items-center justify-center p-10 cursor-pointer hover:bg-muted/50 transition-colors"
           >
-            <Upload className="h-10 w-10 text-muted-foreground mb-3" />
-            <p className="text-sm font-ui font-medium mb-1">Sube una imagen</p>
+            <div className="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-4">
+              <Upload className="h-8 w-8 text-primary" />
+            </div>
+            <p className="text-sm font-medium mb-1">{t.uploadImage}</p>
             <p className="text-xs text-muted-foreground">PNG, JPG hasta 5MB</p>
           </label>
         )}
@@ -68,18 +72,16 @@ export const ImageUpload = ({ value, onChange, testId = 'image-upload' }) => {
         onChange={handleFileChange}
         data-testid={`${testId}-input`}
       />
-      <div className="flex gap-2">
-        <Button
-          variant="ghost"
-          size="sm"
-          className="text-xs"
-          disabled
-          data-testid={`${testId}-ai-generate-button`}
-        >
-          <ImageIcon className="h-3 w-3 mr-1" />
-          Generar con IA (próximamente)
-        </Button>
-      </div>
+      <Button
+        variant="ghost"
+        size="sm"
+        className="text-xs w-full"
+        disabled
+        data-testid={`${testId}-ai-generate-button`}
+      >
+        <ImageIcon className="h-3 w-3 mr-2" />
+        {t.generateAI}
+      </Button>
     </div>
   );
 };
